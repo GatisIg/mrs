@@ -4,7 +4,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Optional;
 
@@ -13,17 +12,14 @@ public class MoviesService {
 
     private final MoviesRepository moviesRepository;
 
-    private static final DecimalFormat df = new DecimalFormat("0.0");
-
     public MoviesService(MoviesRepository moviesRepository) {
         this.moviesRepository = moviesRepository;
     }
 
-
     public List<Movies> getMovies() { return moviesRepository.findAll();}
 
     public List<Movies> getMoviesSorted(String rating) {
-        return moviesRepository.findAll(Sort.by(Sort.Direction.DESC, df.format(rating)));
+        return moviesRepository.findAll(Sort.by(Sort.Direction.DESC, rating));
     }
 
     public void addNewMovie(Movies movies) {

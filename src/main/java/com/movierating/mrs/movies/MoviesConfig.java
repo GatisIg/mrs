@@ -1,6 +1,5 @@
 package com.movierating.mrs.movies;
 
-import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,77 +12,77 @@ public class MoviesConfig {
     @Bean
     CommandLineRunner commandLineRunner(MoviesRepository moviesRepository) {
         return args ->{
-            Movies A = new Movies(
+            Movies a = new Movies(
                     "The Dark Knight",
                     2008,
                     0,
                     0
             );
 
-            Movies B = new Movies(
+            Movies b = new Movies(
                     "The Shawshank Redemption",
                     1994,
                     0,
                     0
             );
 
-            Movies C = new Movies(
+            Movies c = new Movies(
                     "The Godfather",
                     1972,
                     0,
                     0
             );
 
-            Movies D = new Movies(
+            Movies d = new Movies(
                     "The Godfather Part II",
                     1974,
                     0,
                     0
             );
 
-            Movies E = new Movies(
+            Movies e = new Movies(
                     "12 Angry Men",
                     1957,
                     0,
                     0
             );
 
-            Movies F = new Movies(
+            Movies f = new Movies(
                     "Schindler's List",
                     1993,
                     0,
                     0
             );
 
-            Movies G = new Movies(
+            Movies g = new Movies(
                     "The Lord of the Rings: The Return of the King",
                     2003,
                     0,
                     0
             );
 
-            Movies H = new Movies(
+            Movies h = new Movies(
                     "Pulp Fiction",
                     1994,
                     0,
                     0
             );
 
-            Movies I = new Movies(
+            Movies i = new Movies(
                     "The Lord of the Rings: The Fellowship of the Ring",
                     2001,
                     0,
                     0
             );
 
-            Movies J = new Movies(
+            Movies j = new Movies(
                     "The Good, the Bad and the Ugly",
                     1966,
                     0,
                     0
             );
 
-            moviesRepository.saveAll(List.of(A, B, C, D, E, F, G, H, I, J));
+            moviesRepository.saveAll(List.of(a, b, c, d, e, f, g, h, i, j));
 
         };
     }

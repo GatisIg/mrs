@@ -1,6 +1,7 @@
 package com.movierating.mrs.movies;
 
 import javax.persistence.*;
+import java.text.DecimalFormat;
 
 @Entity
 @Table
@@ -14,7 +15,6 @@ public class Movies {
     private int year;
     private double rating;
     private int count;
-
 
     public Movies() {
     }
@@ -57,13 +57,13 @@ public class Movies {
     public void setYear(int year) {
         this.year = year;
     }
-
+    private static final DecimalFormat df = new DecimalFormat("0.0");
     public double getRating() {
-        return rating;
+        return (Double.parseDouble(df.format(rating)));
     }
 
     public void setRating(double rating) {
-        this.rating = (getRating() + rating) / getCount();
+        this.rating = ((getRating() * (getCount()-1)) + rating) / (getCount());
     }
     public int getCount() {
         return count;

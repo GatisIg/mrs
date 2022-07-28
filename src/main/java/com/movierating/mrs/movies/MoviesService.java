@@ -16,7 +16,9 @@ public class MoviesService {
         this.moviesRepository = moviesRepository;
     }
 
-    public List<Movies> getMovies() { return moviesRepository.findAll();}
+    public List<Movies> getMovies() {
+        return moviesRepository.findAll();
+    }
 
     public List<Movies> getMoviesSorted(String rating) {
         return moviesRepository.findAll(Sort.by(Sort.Direction.DESC, rating));
@@ -38,12 +40,16 @@ public class MoviesService {
         moviesRepository.deleteById(moviesId);
     }
 
+    public double rateMovie(Movies movies, int rating) {
+        return ((movies.getRating() * (movies.getCount() - 1)) + rating) / (movies.getCount());
+    }
+
     @Transactional
     public void updateMovie(Long moviesId, int rating) {
         Movies movies = moviesRepository.findById(moviesId)
                 .orElseThrow(() -> new IllegalStateException("Movie with Id" + moviesId + " doesn't exist."));
 
         movies.setCount();
-        movies.setRating(rating);
+        movies.setRating(rateMovie(movies, rating));
     }
 }

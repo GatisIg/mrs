@@ -11,7 +11,8 @@ public interface MoviesRepository extends JpaRepository<Movies, Long> {
 
     @Query("" + "SELECT CASE WHEN COUNT(m) > 0 THEN " +
                 "TRUE ELSE FALSE END " +
-                "FROM Movies m WHERE m.title = ?1"
+                "FROM Movies m " +
+                "WHERE m.title = ?1"
     )
     Boolean selectTitleIfExists(String title);
 

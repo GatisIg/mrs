@@ -41,7 +41,7 @@ public class MoviesService {
     }
 
     public double rateMovie(Movies movies, int rating) {
-        return ((movies.getRating() * (movies.getCount() - 1)) + rating) / (movies.getCount());
+        return ((movies.getRating() * (movies.getRating_count() - 1)) + rating) / (movies.getRating_count());
     }
 
     @Transactional
@@ -49,7 +49,7 @@ public class MoviesService {
         Movies movies = moviesRepository.findById(moviesId)
                 .orElseThrow(() -> new IllegalStateException("Movie with Id" + moviesId + " doesn't exist."));
 
-        movies.setCount();
+        movies.setRating_count();
         movies.setRating(rateMovie(movies, rating));
     }
 }

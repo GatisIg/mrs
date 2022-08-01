@@ -29,13 +29,13 @@ public class Movies {
     @Setter
     private int year;
     private double rating;
-    private int count;
+    private int rating_count;
 
-    public Movies(String title, int year, double rating, int count) {
+    public Movies(String title, int year, double rating, int rating_count) {
         this.title = title;
         this.year = year;
         this.rating = rating;
-        this.count = count;
+        this.rating_count = rating_count;
     }
 
     private static final DecimalFormat df = new DecimalFormat("0.0");
@@ -47,11 +47,11 @@ public class Movies {
         this.rating = rating;
     }
 
-    public int getCount() {
-        return count;
+    public int getRating_count() {
+        return rating_count;
     }
-    public void setCount() {
-        this.count = getCount() + 1;
+    public void setRating_count() {
+        this.rating_count = getRating_count() + 1;
     }
 
     @Override
@@ -61,7 +61,7 @@ public class Movies {
                 ", title='" + title + '\'' +
                 ", year=" + year +
                 ", rating=" + rating +
-                ", xount=" + count +
+                ", xount=" + rating_count +
                 '}';
     }
 }

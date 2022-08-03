@@ -26,12 +26,7 @@ public class MoviesController {
     public void addNewMovie(@RequestBody Movies movies) {
         moviesService.addNewMovie(movies);
     }
-/*
-    @DeleteMapping(path = "{moviesId}")
-    public void deleteMovie(@PathVariable("moviesId") Long moviesId) {
-        moviesService.deleteMovie(moviesId);
-    }
-*/
+
     @PutMapping(path = "{moviesId}")
     public void updateMovie(
         @PathVariable("moviesId") Long moviesId,

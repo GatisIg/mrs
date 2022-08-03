@@ -32,14 +32,6 @@ public class MoviesService {
         moviesRepository.save(movies);
     }
 
-    public void deleteMovie(Long moviesId) {
-        boolean exists = moviesRepository.existsById(moviesId);
-        if (!exists) {
-            throw new IllegalStateException("Movie with Id" + moviesId + " doesn't exist.");
-        }
-        moviesRepository.deleteById(moviesId);
-    }
-
     public double rateMovie(Movies movies, int rating) {
         return ((movies.getRating() * (movies.getRatingCount() - 1)) + rating) / (movies.getRatingCount());
     }

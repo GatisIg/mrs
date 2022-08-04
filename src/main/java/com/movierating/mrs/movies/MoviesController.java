@@ -23,9 +23,15 @@ public class MoviesController {
     }
 
     @PostMapping
+    public void addNewMovie(@RequestBody MoviesDTO moviesDTO) {
+        moviesService.addNewMovie(moviesDTO);
+    }
+
+
+/*    @PostMapping
     public void addNewMovie(@RequestBody Movies movies) {
         moviesService.addNewMovie(movies);
-    }
+    }*/
 
     @PutMapping(path = "{moviesId}")
     public void updateMovie(

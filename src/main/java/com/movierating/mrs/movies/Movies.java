@@ -50,7 +50,7 @@ public class Movies {
     public int getRatingCount() {
         return ratingCount;
     }
-    public void setRatingCount() {
+    public void setRatingCount(int ratingCount) {
         this.ratingCount = getRatingCount() + 1;
     }
 

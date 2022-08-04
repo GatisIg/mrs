@@ -24,7 +24,17 @@ public class MoviesService {
         return moviesRepository.findAll(Sort.by(Sort.Direction.DESC, rating));
     }
 
-    public void addNewMovie(Movies movies) {
+    public void addNewMovie(MoviesDTO moviesDTO) {
+        Boolean titleExists = moviesRepository
+                .selectTitleIfExists(moviesDTO.getTitle());
+        if (titleExists) {
+            throw new BadRequestException(
+                    "Movie with this title is already registered");
+        }
+        moviesRepository.save(movies);
+    }
+
+/*    public void addNewMovie(Movies movies) {
         Boolean titleExists = moviesRepository
                 .selectTitleIfExists(movies.getTitle());
         if (titleExists) {
@@ -32,7 +42,7 @@ public class MoviesService {
                     "Movie with this title is already registered");
         }
         moviesRepository.save(movies);
-    }
+    }*/
 
     public double rateMovie(Movies movies, int rating) {
         return ((movies.getRating() * (movies.getRatingCount() - 1)) + rating) / (movies.getRatingCount());

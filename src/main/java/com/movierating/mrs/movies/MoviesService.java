@@ -4,8 +4,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import javax.ws.rs.BadRequestException;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class MoviesService {
@@ -25,9 +25,11 @@ public class MoviesService {
     }
 
     public void addNewMovie(Movies movies) {
-        Optional<Movies> moviesOptional = moviesRepository.getMoviesByTitle(movies.getTitle());
-        if (moviesOptional.isPresent()) {
-            throw new IllegalStateException("Movie with this title is already registered");
+        Boolean titleExists = moviesRepository
+                .selectTitleIfExists(movies.getTitle());
+        if (titleExists) {
+            throw new BadRequestException(
+                    "Movie with this title is already registered");
         }
         moviesRepository.save(movies);
     }

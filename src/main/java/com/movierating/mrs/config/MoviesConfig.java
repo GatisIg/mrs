@@ -1,5 +1,7 @@
-package com.movierating.mrs.movies;
+package com.movierating.mrs.config;
 
+import com.movierating.mrs.model.Movies;
+import com.movierating.mrs.repository.MoviesRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

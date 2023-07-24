@@ -1,21 +1,15 @@
-package com.movierating.mrs.movies;
+package com.movierating.mrs.model;
 
-import lombok.Data;
+import lombok.Getter;
 import lombok.Setter;
-
-@Data
+@Setter
+@Getter
 public class MoviesDTO {
 
-    @Setter
     private String title;
-    
-    @Setter
+
     private int year;
 
-    public MoviesDTO(String title, int year) {
-        this.title = title;
-        this.year = year;
-    }
 
     @Override
     public String toString() {

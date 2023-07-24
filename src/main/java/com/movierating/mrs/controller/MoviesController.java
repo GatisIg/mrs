@@ -1,5 +1,8 @@
-package com.movierating.mrs.movies;
+package com.movierating.mrs.controller;
 
+import com.movierating.mrs.model.Movies;
+import com.movierating.mrs.model.MoviesDTO;
+import com.movierating.mrs.service.MoviesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,10 +15,14 @@ public class MoviesController {
     private final MoviesService moviesService;
 
     @Autowired
-    public MoviesController(MoviesService moviesService) {this.moviesService = moviesService;}
+    public MoviesController(MoviesService moviesService) {
+        this.moviesService = moviesService;
+    }
 
     @GetMapping
-    public List<Movies> getMovies() { return moviesService.getMovies();}
+    public List<Movies> getMovies() {
+        return moviesService.getMovies();
+    }
 
     @GetMapping("/rating")
     public List<Movies> getMoviesSorted() {
@@ -27,11 +34,6 @@ public class MoviesController {
         moviesService.addNewMovie(moviesDTO);
     }
 
-
-/*    @PostMapping
-    public void addNewMovie(@RequestBody Movies movies) {
-        moviesService.addNewMovie(movies);
-    }*/
 
     @PutMapping(path = "{moviesId}")
     public void updateMovie(

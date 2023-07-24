@@ -1,5 +1,6 @@
-package com.movierating.mrs.movies;
+package com.movierating.mrs.repository;
 
+import com.movierating.mrs.model.Movies;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;

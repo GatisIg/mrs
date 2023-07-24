@@ -1,4 +1,4 @@
-package com.movierating.mrs.movies;
+package com.movierating.mrs.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -51,7 +51,7 @@ public class Movies {
         return ratingCount;
     }
     public void setRatingCount(int ratingCount) {
-        this.ratingCount = getRatingCount() + 1;
+        this.ratingCount = ratingCount;
     }
 
     @Override

@@ -1,11 +1,14 @@
-package com.movierating.mrs.movies;
+package com.movierating.mrs.service;
 
-import org.springframework.data.domain.Sort;
-import org.springframework.stereotype.Service;
-
+import com.movierating.mrs.model.Movies;
+import com.movierating.mrs.model.MoviesDTO;
+import com.movierating.mrs.repository.MoviesRepository;
+import com.movierating.mrs.util.MoviesDTOConverter;
+import java.util.List;
 import javax.transaction.Transactional;
 import javax.ws.rs.BadRequestException;
-import java.util.List;
+import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Service;
 
 @Service
 public class MoviesService {
@@ -31,21 +34,7 @@ public class MoviesService {
             throw new BadRequestException(
                     "Movie with this title is already registered");
         }
-        moviesRepository.save(movies);
-    }
-
-/*    public void addNewMovie(Movies movies) {
-        Boolean titleExists = moviesRepository
-                .selectTitleIfExists(movies.getTitle());
-        if (titleExists) {
-            throw new BadRequestException(
-                    "Movie with this title is already registered");
-        }
-        moviesRepository.save(movies);
-    }*/
-
-    public double rateMovie(Movies movies, int rating) {
-        return ((movies.getRating() * (movies.getRatingCount() - 1)) + rating) / (movies.getRatingCount());
+        moviesRepository.save(MoviesDTOConverter.mapToEntity(moviesDTO));
     }
 
     @Transactional
@@ -53,7 +42,12 @@ public class MoviesService {
         Movies movies = moviesRepository.findById(moviesId)
                 .orElseThrow(() -> new IllegalStateException("Movie with Id" + moviesId + " doesn't exist."));
 
-        movies.setRatingCount();
-        movies.setRating(rateMovie(movies, rating));
+        movies.setRatingCount(movies.getRatingCount()+1);
+        movies.setRating(rateMovie(rating, movies.getRatingCount(), movies.getRating()));
+    }
+
+    private double rateMovie(int newRating, int existingRatingCount, double existingRating) {
+        return ((existingRating * (existingRatingCount - 1)) + newRating) / (existingRatingCount);
     }
 }
+//if movie = old, is classic, etc. to make chain of responsibility

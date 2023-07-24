@@ -1,5 +1,6 @@
-package com.movierating.mrs.movies;
+package com.movierating.mrs.model;
 
+import com.movierating.mrs.repository.MoviesRepository;
 import org.junit.Ignore;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;

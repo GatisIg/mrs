@@ -1,5 +1,6 @@
 package com.movierating.mrs.model;
 
+import java.util.Observable;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,10 +10,11 @@ import javax.persistence.*;
 import java.text.DecimalFormat;
 
 @Entity
-@Table
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "movie_type", discriminatorType = DiscriminatorType.STRING)
 @NoArgsConstructor
 @AllArgsConstructor
-public class Movies {
+public class Movies extends Observable {
 
     @Id
     @SequenceGenerator(name = "movie_sequence", sequenceName = "movie_sequence", allocationSize = 1)
@@ -45,6 +47,8 @@ public class Movies {
 
     public void setRating(double rating) {
         this.rating = rating;
+        setChanged();
+        notifyObservers();
     }
 
     public int getRatingCount() {
@@ -61,7 +65,7 @@ public class Movies {
                 ", title='" + title + '\'' +
                 ", year=" + year +
                 ", rating=" + rating +
-                ", xount=" + ratingCount +
+                ", count=" + ratingCount +
                 '}';
     }
 }

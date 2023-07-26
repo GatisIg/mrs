@@ -3,7 +3,6 @@ package com.movierating.mrs.service;
 import com.movierating.mrs.model.Movies;
 import com.movierating.mrs.model.MoviesDTO;
 import com.movierating.mrs.repository.MoviesRepository;
-import com.movierating.mrs.util.MoviesDTOConverter;
 import java.util.List;
 import javax.transaction.Transactional;
 import javax.ws.rs.BadRequestException;
@@ -34,7 +33,10 @@ public class MoviesService {
             throw new BadRequestException(
                     "Movie with this title is already registered");
         }
-        moviesRepository.save(MoviesDTOConverter.mapToEntity(moviesDTO));
+        Movies movie = MovieFactory.createMovie(moviesDTO.getTitle(),
+                moviesDTO.getYear());
+
+        moviesRepository.save(movie);
     }
 
     @Transactional

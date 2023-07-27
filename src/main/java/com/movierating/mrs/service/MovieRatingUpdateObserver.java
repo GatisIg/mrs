@@ -1,15 +1,21 @@
 package com.movierating.mrs.service;
 
-import com.movierating.mrs.model.Movies;
-import java.util.Observable;
+import com.movierating.mrs.model.MovieObserver;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-public class MovieRatingUpdateObserver implements MovieRatingObserver {
+public class MovieRatingUpdateObserver implements MovieObserver {
+
+    private String movieTitle;
+
+    private static final Logger logger = LoggerFactory.getLogger(MovieRatingUpdateObserver.class);
+
+    public MovieRatingUpdateObserver(String movieTitle) {
+        this.movieTitle = movieTitle;
+    }
 
     @Override
-    public void update(Observable o, Object arg) {
-        if (o instanceof Movies) {
-            Movies movie = (Movies) o;
-            System.out.println("Movie rating for: " + movie.getTitle() + ", has changed to: " + movie.getRating());
-        }
+    public void onRatingUpdate(double newRating) {
+        logger.info(movieTitle + " received a new rating. The rating is now: " + newRating);
     }
 }

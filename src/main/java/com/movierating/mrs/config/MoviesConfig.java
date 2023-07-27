@@ -2,11 +2,11 @@ package com.movierating.mrs.config;
 
 import com.movierating.mrs.model.Movies;
 import com.movierating.mrs.repository.MoviesRepository;
+import com.movierating.mrs.service.MovieRatingUpdateObserver;
+import java.util.List;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-import java.util.List;
 
 @Configuration
 public class MoviesConfig {
@@ -83,6 +83,9 @@ public class MoviesConfig {
                     0,
                     0
             );
+
+            MovieRatingUpdateObserver updateObserver = new MovieRatingUpdateObserver(a.getTitle());
+            a.addObserver(updateObserver);
 
             moviesRepository.saveAll(List.of(a, b, c, d, e, f, g, h, i, j));
 

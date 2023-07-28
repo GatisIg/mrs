@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.SequenceGenerator;
+import javax.persistence.Transient;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,10 +23,7 @@ import lombok.Setter;
 @DiscriminatorColumn(name = "movie_type", discriminatorType = DiscriminatorType.STRING)
 @NoArgsConstructor
 @AllArgsConstructor
-public class Movies implements MovieSubject {
-
-   //@Transient
-    private static List<MovieObserver> observers = new ArrayList<>();
+public class Movies {
 
     @Id
     @SequenceGenerator(name = "movie_sequence", sequenceName = "movie_sequence", allocationSize = 1)
@@ -43,6 +41,8 @@ public class Movies implements MovieSubject {
     private int year;
     private double rating;
     private int ratingCount;
+    @Transient
+    private List<Channel> channels  = new ArrayList<>();
 
     public Movies(String title, int year, double rating, int ratingCount) {
         this.title = title;
@@ -59,7 +59,17 @@ public class Movies implements MovieSubject {
 
     public void setRating(double rating) {
         this.rating = rating;
-        notifyRatingUpdate(rating);
+        for (Channel channel : this.channels) {
+            channel.update(this.rating);
+        }
+    }
+
+    public void addObserver(Channel channel) {
+        this.channels.add(channel);
+    }
+
+    public void removeObserver(Channel channel) {
+        this.channels.remove(channel);
     }
 
     public int getRatingCount() {
@@ -67,23 +77,6 @@ public class Movies implements MovieSubject {
     }
     public void setRatingCount(int ratingCount) {
         this.ratingCount = ratingCount;
-    }
-
-    @Override
-    public void addObserver(MovieObserver observer) {
-        observers.add(observer);
-    }
-
-    @Override
-    public void removeObserver(MovieObserver observer) {
-        observers.remove(observer);
-    }
-
-    @Override
-    public void notifyRatingUpdate(double newRating) {
-        for (MovieObserver observer : observers) {
-            observer.onRatingUpdate(newRating);
-        }
     }
 
     @Override

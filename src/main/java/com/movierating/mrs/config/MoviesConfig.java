@@ -2,8 +2,11 @@ package com.movierating.mrs.config;
 
 import com.movierating.mrs.model.Movies;
 import com.movierating.mrs.repository.MoviesRepository;
-import com.movierating.mrs.service.MovieRatingUpdateObserver;
+import com.movierating.mrs.service.MovieRatingChannel;
 import java.util.List;
+import org.modelmapper.internal.util.Assert;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -84,11 +87,14 @@ public class MoviesConfig {
                     0
             );
 
-            MovieRatingUpdateObserver updateObserver = new MovieRatingUpdateObserver(a.getTitle());
-            a.addObserver(updateObserver);
+            MovieRatingChannel observer = new MovieRatingChannel();
+            a.addObserver(observer);
 
             moviesRepository.saveAll(List.of(a, b, c, d, e, f, g, h, i, j));
 
+            //rate for Observer test, should return only a: 5*
+            a.setRating(5);
+            b.setRating(4);
         };
     }
 

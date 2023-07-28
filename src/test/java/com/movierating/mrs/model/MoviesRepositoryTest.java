@@ -24,12 +24,12 @@ class MoviesRepositoryTest {
     void selectTitleIfExists() {
         String title = "The Dark Knight";
         Movies movies = new Movies(
-                1L,
                 title,
                 2008,
                 0,
                 0
         );
+        movies.setId(1L);
         underTest.save(movies);
 
         boolean exists = underTest.selectTitleIfExists(title);

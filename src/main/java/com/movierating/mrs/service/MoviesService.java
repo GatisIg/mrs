@@ -10,7 +10,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 @Service
-public class MoviesService {
+public class MoviesService implements MoviesServiceInterface {
 
     private final MoviesRepository moviesRepository;
 
@@ -40,6 +40,7 @@ public class MoviesService {
     }
 
     @Transactional
+    @Override
     public void updateMovie(Long moviesId, int rating) {
         Movies movies = moviesRepository.findById(moviesId)
                 .orElseThrow(() -> new IllegalStateException("Movie with Id" + moviesId + " doesn't exist."));
@@ -52,4 +53,3 @@ public class MoviesService {
         return ((existingRating * (existingRatingCount - 1)) + newRating) / (existingRatingCount);
     }
 }
-//if movie = old, is classic, etc. to make chain of responsibility

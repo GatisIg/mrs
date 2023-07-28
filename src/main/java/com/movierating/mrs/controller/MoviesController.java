@@ -3,6 +3,7 @@ package com.movierating.mrs.controller;
 import com.movierating.mrs.model.Movies;
 import com.movierating.mrs.model.MoviesDTO;
 import com.movierating.mrs.service.MoviesService;
+import com.movierating.mrs.service.MoviesServiceProxy;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,10 +20,12 @@ import org.springframework.web.bind.annotation.RestController;
 public class MoviesController {
 
     private final MoviesService moviesService;
+    private final MoviesServiceProxy moviesServiceProxy;
 
     @Autowired
     public MoviesController(MoviesService moviesService) {
         this.moviesService = moviesService;
+        this.moviesServiceProxy = new MoviesServiceProxy("ADMIN", moviesService);
     }
 
     @GetMapping
@@ -44,8 +47,10 @@ public class MoviesController {
     @PutMapping(path = "{moviesId}")
     public void updateMovie(
         @PathVariable("moviesId") Long moviesId,
-        @RequestParam("rating") double rating) {
-            moviesService.updateMovie(moviesId, (int) rating);
+        @RequestParam("rating") double rating,
+        @RequestParam("admin") boolean admin) throws Exception {
+            moviesServiceProxy.setAdmin(admin);
+            moviesServiceProxy.updateMovie(moviesId, (int) rating);
         }
 
 }

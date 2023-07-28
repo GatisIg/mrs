@@ -5,7 +5,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class MovieRatingChannel implements Channel {
+
     private double rating;
+
     private static final Logger logger = LoggerFactory.getLogger(MovieRatingChannel.class);
 
     @Override

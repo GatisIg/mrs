@@ -10,10 +10,7 @@ public class MoviesServiceProxy implements MoviesServiceInterface {
         isAdmin = admin;
     }
 
-    public MoviesServiceProxy(String user, MoviesServiceInterface moviesServiceInterface) {
-        if ("ADMIN".equals(user)) {
-            this.isAdmin = true;
-        }
+    public MoviesServiceProxy(MoviesServiceInterface moviesServiceInterface) {
         this.moviesServiceInterface = moviesServiceInterface;
     }
 
@@ -22,7 +19,7 @@ public class MoviesServiceProxy implements MoviesServiceInterface {
         if (this.isAdmin) {
             this.moviesServiceInterface.updateMovie(moviesId, rating);
         } else {
-            throw new Exception("You need admin privileges tu run this command.");
+            throw new Exception("You need admin privileges to run this command.");
         }
     }
 }

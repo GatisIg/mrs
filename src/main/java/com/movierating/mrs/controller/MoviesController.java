@@ -26,7 +26,7 @@ public class MoviesController {
     @Autowired
     public MoviesController(MoviesService moviesService) {
         this.moviesService = moviesService;
-        this.moviesServiceProxy = new MoviesServiceProxy("ADMIN", moviesService);
+        this.moviesServiceProxy = new MoviesServiceProxy(moviesService);
     }
 
     @GetMapping

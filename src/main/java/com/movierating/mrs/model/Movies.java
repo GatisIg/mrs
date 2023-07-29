@@ -32,9 +32,12 @@ public class Movies {
     @Setter
     private Long id;
 
-    @Getter
     @Setter
     private String title;
+
+    public String getTitle() {
+        return state.getTitleWithState(title);
+    }
 
     @Getter
     @Setter
@@ -77,6 +80,13 @@ public class Movies {
     }
     public void setRatingCount(int ratingCount) {
         this.ratingCount = ratingCount;
+    }
+
+    @Transient
+    private MovieState state = new DefaultState();
+
+    public void setState(MovieState state) {
+        this.state = state;
     }
 
     @Override

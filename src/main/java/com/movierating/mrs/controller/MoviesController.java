@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class MoviesController {
 
     private final MoviesService moviesService;
+
     private final MoviesServiceProxy moviesServiceProxy;
 
     @Autowired
@@ -53,4 +54,8 @@ public class MoviesController {
             moviesServiceProxy.updateMovie(moviesId, (int) rating);
         }
 
+    @PutMapping(path = "{moviesId}/awarded")
+    public Movies awardMovie(@PathVariable("moviesId") Long moviesId) {
+        return moviesService.awardMovie(moviesId);
+    }
 }

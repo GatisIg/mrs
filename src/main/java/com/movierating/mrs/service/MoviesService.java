@@ -1,5 +1,6 @@
 package com.movierating.mrs.service;
 
+import com.movierating.mrs.model.MovieStateAwarded;
 import com.movierating.mrs.model.Movies;
 import com.movierating.mrs.model.MoviesDTO;
 import com.movierating.mrs.repository.MoviesRepository;
@@ -51,5 +52,12 @@ public class MoviesService implements MoviesServiceInterface {
 
     private double rateMovie(int newRating, int existingRatingCount, double existingRating) {
         return ((existingRating * (existingRatingCount - 1)) + newRating) / (existingRatingCount);
+    }
+
+    public Movies awardMovie(Long moviesId) {
+        Movies movies = moviesRepository.findById(moviesId)
+                .orElseThrow(() -> new IllegalStateException("Movie with Id" + moviesId + " doesn't exist."));
+        movies.setState(new MovieStateAwarded());
+        return movies;
     }
 }

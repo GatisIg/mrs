@@ -10,7 +10,7 @@ public class ModernMovie extends Movies {
     public ModernMovie() {
     }
 
-    public ModernMovie(String title, int year, double rating, int ratingCount) {
-        super(title, year, rating, ratingCount);
+    public ModernMovie(String title, int year, double rating, int ratingCount, MementoCareTaker mementoCareTaker) {
+        super(title, year, rating, ratingCount, mementoCareTaker);
     }
 }

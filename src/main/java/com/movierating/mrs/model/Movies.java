@@ -17,6 +17,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.beans.factory.annotation.Autowired;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
@@ -24,6 +25,9 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Movies {
+
+    @Transient
+    private MementoCareTaker mementoCareTaker;
 
     @Id
     @SequenceGenerator(name = "movie_sequence", sequenceName = "movie_sequence", allocationSize = 1)
@@ -42,16 +46,21 @@ public class Movies {
     @Getter
     @Setter
     private int year;
+
     private double rating;
+
     private int ratingCount;
+
     @Transient
     private List<Channel> channels  = new ArrayList<>();
 
-    public Movies(String title, int year, double rating, int ratingCount) {
+    @Autowired
+    public Movies(String title, int year, double rating, int ratingCount, MementoCareTaker mementoCareTaker) {
         this.title = title;
         this.year = year;
         this.rating = rating;
         this.ratingCount = ratingCount;
+        this.mementoCareTaker = mementoCareTaker;
     }
 
     private static final DecimalFormat df = new DecimalFormat("0.0");
@@ -60,7 +69,23 @@ public class Movies {
         return (Double.parseDouble(df.format(rating)));
     }
 
+    @Transient
+    MovieMemento memento = new MovieMemento(this.id, (int) this.rating);
+
+    @Autowired
+    public void setMementoCareTaker(MementoCareTaker mementoCareTaker) {
+        this.mementoCareTaker = mementoCareTaker;
+    }
+
+    public void restoreFromMemento(MovieMemento memento) {
+        this.rating = memento.getRating();
+        this.ratingCount--;
+    }
+
     public void setRating(double rating) {
+        if (this.mementoCareTaker != null) {
+            this.mementoCareTaker.addMemento(this.memento);
+        }
         this.rating = rating;
         for (Channel channel : this.channels) {
             channel.update(this.rating);

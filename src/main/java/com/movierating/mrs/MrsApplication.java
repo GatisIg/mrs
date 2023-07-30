@@ -1,6 +1,5 @@
 package com.movierating.mrs;
 
-import net.bytebuddy.matcher.StringMatcher;
 import org.modelmapper.ModelMapper;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

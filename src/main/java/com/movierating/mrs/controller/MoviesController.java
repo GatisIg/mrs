@@ -1,5 +1,6 @@
 package com.movierating.mrs.controller;
 
+import com.movierating.mrs.model.MementoCareTaker;
 import com.movierating.mrs.model.Movies;
 import com.movierating.mrs.model.MoviesDTO;
 import com.movierating.mrs.service.MoviesService;
@@ -23,10 +24,13 @@ public class MoviesController {
 
     private final MoviesServiceProxy moviesServiceProxy;
 
+    private final MementoCareTaker mementoCareTaker;
+
     @Autowired
-    public MoviesController(MoviesService moviesService) {
+    public MoviesController(MoviesService moviesService, MementoCareTaker mementoCareTaker) {
         this.moviesService = moviesService;
         this.moviesServiceProxy = new MoviesServiceProxy(moviesService);
+        this.mementoCareTaker = mementoCareTaker;
     }
 
     @GetMapping
@@ -44,7 +48,6 @@ public class MoviesController {
         moviesService.addNewMovie(moviesDTO);
     }
 
-
     @PutMapping(path = "{moviesId}")
     public void updateMovie(
         @PathVariable("moviesId") Long moviesId,
@@ -54,8 +57,13 @@ public class MoviesController {
             moviesServiceProxy.updateMovie(moviesId, (int) rating);
         }
 
+    @PutMapping(path = "{moviesId}/undoLastRating")
+    public void undoLastRating(@PathVariable("moviesId") Long moviesId) {
+        this.moviesService.undoLastRating(moviesId);
+    }
+
     @PutMapping(path = "{moviesId}/awarded")
     public Movies awardMovie(@PathVariable("moviesId") Long moviesId) {
-        return moviesService.awardMovie(moviesId);
+        return this.moviesService.awardMovie(moviesId);
     }
 }
